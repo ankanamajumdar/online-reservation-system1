@@ -1,0 +1,43 @@
+<?php
+require_once 'Train.php'; // Include the Train class
+
+// Assuming you have some train data stored in an array
+$trains = [
+    new Train("T123", "Station A", "Station B", "10:00", "12:00", 50),
+    new Train("T456", "Station C", "Station D", "11:00", "13:00", 30),
+    new Train("T789", "Station E", "Station F", "12:00", "14:00", 20)
+];
+
+// Handling form submission
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    // Retrieve search criteria
+    $departureStation = $_POST["departure_station"];
+    $arrivalStation = $_POST["arrival_station"];
+    $date = $_POST["date"];
+
+    // Perform search
+    $availableTrains = array_filter($trains, function($train) use ($departureStation, $arrivalStation) {
+        return $train->getDepartureStation() == $departureStation && $train->getArrivalStation() == $arrivalStation;
+    });
+
+    // Display search results
+    if (empty($availableTrains)) {
+        echo "No trains available for the selected route.";
+    } else {
+        echo "<h2>Available Trains</h2>";
+        echo "<table border='1'>";
+        echo "<tr><th>Train Number</th><th>Departure Station</th><th>Arrival Station</th><th>Departure Time</th><th>Arrival Time</th><th>Available Seats</th></tr>";
+        foreach ($availableTrains as $train) {
+            echo "<tr>";
+            echo "<td>" . $train->getTrainNumber() . "</td>";
+            echo "<td>" . $train->getDepartureStation() . "</td>";
+            echo "<td>" . $train->getArrivalStation() . "</td>";
+            echo "<td>" . $train->getDepartureTime() . "</td>";
+            echo "<td>" . $train->getArrivalTime() . "</td>";
+            echo "<td>" . $train->getAvailableSeats() . "</td>";
+            echo "</tr>";
+        }
+        echo "</table>";
+    }
+}
+?>
