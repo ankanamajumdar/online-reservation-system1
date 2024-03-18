@@ -1,0 +1,53 @@
+<?php
+
+class Train {
+    private $trainNumber;
+    private $departureStation;
+    private $arrivalStation;
+    private $departureTime;
+    private $arrivalTime;
+    private $availableSeats;
+
+    public function __construct($trainNumber, $departureStation, $arrivalStation, $departureTime, $arrivalTime, $availableSeats) {
+        $this->trainNumber = $trainNumber;
+        $this->departureStation = $departureStation;
+        $this->arrivalStation = $arrivalStation;
+        $this->departureTime = $departureTime;
+        $this->arrivalTime = $arrivalTime;
+        $this->availableSeats = $availableSeats;
+    }
+
+    public function getTrainNumber() {
+        return $this->trainNumber;
+    }
+
+    public function getDepartureStation() {
+        return $this->departureStation;
+    }
+
+    public function getArrivalStation() {
+        return $this->arrivalStation;
+    }
+
+    public function getDepartureTime() {
+        return $this->departureTime;
+    }
+
+    public function getArrivalTime() {
+        return $this->arrivalTime;
+    }
+
+    public function getAvailableSeats() {
+        return $this->availableSeats;
+    }
+
+    public function bookSeats($numSeats) {
+        if ($this->availableSeats >= $numSeats) {
+            $this->availableSeats -= $numSeats;
+            return true;
+        } else {
+            return false;
+        }
+    }
+}
+?>
