@@ -1,0 +1,27 @@
+CREATE DATABASE train_reservation;
+CREATE TABLE trains (
+    train_id INT AUTO_INCREMENT PRIMARY KEY,
+    train_number VARCHAR(20),
+    departure_station VARCHAR(100),
+    arrival_station VARCHAR(100),
+    departure_time TIME,
+    arrival_time TIME,
+    available_seats INT
+);
+
+CREATE TABLE users (
+    user_id INT AUTO_INCREMENT PRIMARY KEY,
+    username VARCHAR(50),
+    password VARCHAR(255) -- Hashed password, consider using password_hash() in PHP
+    -- Add other user information columns as needed
+);
+
+CREATE TABLE reservations (
+    reservation_id INT AUTO_INCREMENT PRIMARY KEY,
+    user_id INT,
+    train_id INT,
+    num_seats INT,
+    reservation_date DATE,
+    FOREIGN KEY (user_id) REFERENCES users(user_id),
+    FOREIGN KEY (train_id) REFERENCES trains(train_id)
+);
